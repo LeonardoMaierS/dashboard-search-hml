@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard Analytics</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard Analytics</title>
+  <link rel="icon" type="image/png" href="assets/icons/favicon.png">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <div class="container" id="dashboard-main" style="display: none;">
+
+    <div class="header">
+      <h1>Dashboard Analytics</h1>
+      <p>Análise de performance das buscas VTEX</p>
+
+      <div class="custom-year-select custom-select" id="yearCustomSelect">
+        <span class="custom-year-value custom-select-value">2025</span>
+        <span class="custom-select-arrow">
+          <svg viewBox="0 0 20 20" fill="none">
+            <path d="M5 8l5 5 5-5" stroke="#b3c8cf" stroke-width="2" stroke-linecap="round" />
+          </svg>
+        </span>
+        <div class="custom-select-list">
+          <div class="custom-select-option" data-value="2023" data-disabled="true">2023</div>
+          <div class="custom-select-option" data-value="2024" data-disabled="true">2024</div>
+          <div class="custom-select-option" data-value="2025">2025</div>
+          <div class="custom-select-option" data-value="2026" data-disabled="true">2026</div>
+          <div class="custom-select-option" data-value="2027" data-disabled="true">2027</div>
+        </div>
+      </div>
+
+      <div class="custom-platform-select custom-select" id="platformCustomSelect">
+        <div class="custom-select-list-up">
+          <span class="custom-platform-value custom-select-value">Desktop e Mobile</span>
+          <div class="custom-select-arroww">
+            <svg viewBox="0 0 20 20" fill="none">
+              <path d="M5 8l5 5 5-5" stroke="#b3c8cf" stroke-width="2" stroke-linecap="round" />
+            </svg>
+          </div>
+        </div>
+        <div class="custom-select-list">
+          <div class="custom-select-option" data-value="desktop e mobile">Desktop e Mobile</div>
+          <div class="custom-select-option" data-value="desktop">Desktop</div>
+          <div class="custom-select-option" data-value="mobile">Mobile</div>
+        </div>
+      </div>
+
+      <div class="month-selector-container">
+        <div class="month-timeline" id="monthTimeline"></div>
+      </div>
+
+      <div id="header-loader" aria-live="polite" aria-busy="true" title="Carregando dados…" style="display:inline-flex">
+        <span class="hdr-spin" aria-hidden="true"></span>
+        <p style="font-size: 0.8rem; padding-top: 3px; font-weight: normal;">Carregando dados...</p>
+      </div>
+
+      <button id="openExportModal" class="open-export-btn">
+        <p style="font-size: 0.9rem;">Exportar Relatório</p>
+      </button>
+    </div>
+
+    <div class="info-modal" id="export-modal">
+      <div class="info-content">
+        <strong>Exportar Relatório de Buscas</strong>
+        <p>Permite exportar um arquivo Excel com os termos mais buscados no período selecionado.</p>
+        <ul>
+          <li>Defina a data de início e fim.</li>
+          <li>Escolha a quantidade de itens no ranking.</li>
+          <li>O relatório inclui Buscas, Pedidos e Vendas.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div id="selected-months-blocks"></div>
+
+    <div class="section">
+      <div id="keyMetrics">
+        <h2 class="section-title" style="font-size: 1.2rem">
+          Métricas Principais
+          <span class="info-trigger" data-modal="kpi-modal">i</span>
+        </h2>
+      </div>
+      <div class="kpi-grid" id="kpiGrid"></div>
+    </div>
+
+    <div class="section" id="chartsSection">
+      <h2 class="section-title" style="font-size:1.2rem;">
+        Gráficos de Performance
+      </h2>
+      <div class="charts-grid" id="mainChartsGrid">
+        <div class="chart-container">
+          <div class="chart-header">
+            <div class="chart-title">
+              Top 10 Termos Buscados
+              <span class="info-trigger" data-modal="info-top10bar">i</span>
+            </div>
+          </div>
+          <canvas id="top10BarChart"></canvas>
+        </div>
+        <div class="chart-container">
+          <div class="chart-header">
+            <div class="chart-title">
+              Proporção Top 10 Buscas
+              <span class="info-trigger" data-modal="info-top10pie">i</span>
+            </div>
+          </div>
+          <canvas id="top10PieChart"></canvas>
+        </div>
+        <div class="chart-container">
+          <div class="chart-header">
+            <div class="chart-title">
+              Taxa de Conversão
+              <span class="info-trigger" data-modal="info-conversao">i</span>
+            </div>
+          </div>
+          <canvas id="conversionChart"></canvas>
+        </div>
+        <div class="chart-container">
+          <div class="chart-header">
+            <div class="chart-title">
+              Evolução das Buscas
+              <span class="info-trigger" data-modal="info-evolucao">i</span>
+            </div>
+          </div>
+          <canvas id="evolutionChart"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <div class="section" id="tableSection">
+      <div class="section-title planilha-title"
+        style="font-size:1.2rem; display:flex; justify-content:space-between; align-items:center; width:100%; padding: 0 8px;">
+        <span class="planilha-title-text">
+          <span class="planilha-icon"></span>
+          <span>Ranking de Termos Buscados – Visão Comparativa</span>
+          <span class="info-trigger" data-modal="table-modal">i</span>
+        </span>
+        <div class="table-controls-select-wrapper" style="margin-left:auto;">
+          <select id="itemLimit" class="table-controls-select table-controls-select-sm">
+            <option value="5" selected>5</option>
+            <option value="10">10</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+          </select>
+          <svg width="16" height="16" viewBox="0 0 20 20" fill="none" class="select-arrow">
+            <path d="M5 8l5 5 5-5" stroke="#b3c8cf" stroke-width="2" stroke-linecap="round" />
+          </svg>
+        </div>
+      </div>
+      <div class="table-container">
+        <table class="modern-table" id="detailedTable">
+          <thead id="tableHead"></thead>
+          <tbody id="tableBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="section" id="insightsSection">
+      <h2 class="section-title" style="font-size:1.2rem;">
+        Insights Automáticos
+        <span class="info-trigger" data-modal="insights-modal">i</span>
+      </h2>
+      <div class="insights-container" id="insightsContainer"></div>
+    </div>
+
+    <footer class="footer">
+      <div>
+        <span>
+          Dúvidas ou sugestões? Contato:
+          <a href="mailto:leonardo.silva28@farmaciassaojoao.com.br">leonardo.silva28@farmaciassaojoao.com.br</a>
+        </span>
+        <span class="versao-dash" id="versao-dash"></span>
+        <span class="ultima-atualizacao"> Última atualização: <span id="ultima-atualizacao-valor"></span>
+      </div>
+    </footer>
+
+  </div>
+
+  <div class="info-modal" id="kpi-modal">
+    <div class="info-content">
+      <strong>Métricas Principais</strong><br>
+      <small>
+        Mostra as principais KPIs do período selecionado.<br>
+        <b>Conversão:</b> Pedidos / Buscas.<br>
+        <b>CTR:</b> Cliques / Buscas.<br>
+        <b>Ticket Médio:</b> Valor médio por pedido.<br>
+        Todas as métricas reagem à seleção de meses.
+      </small>
+    </div>
+  </div>
+  <div class="info-modal" id="info-evolucao">
+    <div class="info-content">
+      <strong>Evolução das Buscas</strong>
+      <p>
+        Exibe o volume total de buscas mensais e buscas com resultado. Permite identificar tendências, sazonalidades e
+        efeitos de campanhas sobre a demanda. Ideal para detectar períodos de maior/menor procura e eficiência do
+        mecanismo de busca.
+      </p>
+      <div class="info-formula">
+        <b>Como ler:</b> Linhas próximas indicam boa qualidade dos termos buscados; distantes sugerem que muitos termos
+        não retornam produtos.
+      </div>
+    </div>
+  </div>
+  <div class="info-modal" id="info-conversao">
+    <div class="info-content">
+      <strong>Taxa de Conversão</strong>
+      <p>
+        Mostra o percentual de buscas que resultaram em vendas para cada mês selecionado. Mede a eficácia comercial da
+        busca e permite detectar oportunidades de melhoria em termos, landing pages ou sortimento.
+      </p>
+      <div class="info-formula">
+        <b>Fórmula:</b> Conversão (%) = (Pedidos / Buscas) × 100
+      </div>
+    </div>
+  </div>
+  <div class="info-modal" id="info-top10bar">
+    <div class="info-content">
+      <strong>Top 10 Termos Buscados</strong>
+      <p>
+        Lista os 10 termos mais buscados do mês, com o volume absoluto de buscas. Revela produtos ou linhas de maior
+        interesse dos clientes.
+      </p>
+      <div class="info-formula">
+        <b>Dica:</b> Os termos no topo sugerem oportunidades de destaque em campanhas, vitrine ou estoque.
+      </div>
+    </div>
+  </div>
+  <div class="info-modal" id="info-top10pie">
+    <div class="info-content">
+      <strong>Proporção Top 10 Buscas</strong>
+      <p>
+        Demonstra quanto cada termo contribuiu para o total das buscas Top 10. Ajuda a identificar concentração de
+        demanda em poucos produtos ou dispersão.
+      </p>
+      <div class="info-formula">
+        <b>Fórmula:</b> Participação (%) = (Buscas do termo / Total Top 10) × 100
+      </div>
+    </div>
+  </div>
+  <div class="info-modal" id="table-modal">
+    <div class="info-content">
+      <strong>Ranking de Termos Buscados – Visão Comparativa</strong>
+      <p>
+        Esta tabela apresenta o ranking dinâmico dos termos de busca mais utilizados no e-commerce, permitindo
+        comparação direta entre diferentes meses selecionados. Para cada termo:
+      </p>
+      <ul>
+        <li><b>Buscas:</b> Total de vezes que o termo foi pesquisado no período.</li>
+        <li><b>Vendas:</b> Quantidade de pedidos gerados após buscas pelo termo.</li>
+        <li><b>Conversão (%):</b> Proporção de buscas que geraram pedidos (eficácia do termo).</li>
+        <li><b>Tendência:</b> Indica se o termo está em ascensão (<span style="color:#059669;">↗</span>), queda (<span
+            style="color:#dc2626;">↘</span>) ou estável (<span style="color:#64748b;">→</span>) ao comparar os meses
+          selecionados.</li>
+      </ul>
+      <div class="info-formula">
+        <b>Como funciona?</b><br>
+        - Você pode ajustar a quantidade de itens do ranking (5, 10, 50 ou 100 principais termos) pelo menu à
+        direita.<br>
+        - Ao selecionar múltiplos meses, a tabela mostra os valores de cada mês lado a lado.<br>
+        - <b>Dica:</b> Utilize essa visão para identificar oportunidades, monitorar tendências, sazonalidades e
+        direcionar ações de marketing e sortimento.
+      </div>
+    </div>
+  </div>
+  <div class="info-modal" id="insights-modal">
+    <div class="info-content">
+      <strong>Insights Automáticos</strong><br>
+      <small>
+        Análise inteligente de tendências e oportunidades relevantes.<br>
+        Variações superiores a 5% geram insights de destaque.<br>
+        Os insights ajudam a identificar ações estratégicas para o e-commerce.
+      </small>
+    </div>
+  </div>
+  <div class="info-modal" id="info-topconv">
+    <div class="info-content">
+      <strong>Top 10 Conversão (%)</strong>
+      <p>Exibe os termos com maior taxa de conversão do mês.</p>
+      <div class="info-formula">
+        Conversão (%) = (Pedidos / Buscas) × 100
+      </div>
+    </div>
+  </div>
+
+  <div class="info-modal" id="info-topvendas">
+    <div class="info-content">
+      <strong>Top 10 Vendas Absolutas</strong>
+      <p>Mostra os termos que mais geraram pedidos, em valor absoluto.</p>
+      <div class="info-formula">
+        Foco em volume total de vendas, não em taxa.
+      </div>
+    </div>
+  </div>
+
+  <div class="info-modal" id="export-relatorio-info">
+    <div class="info-content">
+      <strong>Exportar Relatório de Buscas</strong>
+      <p>Essa função permite gerar um arquivo Excel contendo:</p>
+      <ul>
+        <li>Período filtrado por data inicial e final</li>
+        <li>Quantidade de termos mais buscados</li>
+        <li>Filtro por plataforma: Mobile ou Desktop</li>
+        <li>Colunas de Buscas, Pedidos e Vendas</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="info-modal" id="info-evolconv">
+    <div class="info-content">
+      <strong>Evolução da Conversão Diária</strong>
+      <p>Mostra a conversão (%) ao longo dos dias do mês.</p>
+      <div class="info-formula">
+        Útil para identificar quedas, picos e tendências comerciais.
+      </div>
+    </div>
+  </div>
+
+  <div id="exportModal" class="modal">
+    <div class="modal-content">
+      <span class="modal-close" id="closeExportModal">&times;</span>
+      <h2>
+        Exportar Relatório de Buscas
+        <span class="info-trigger" data-modal="export-relatorio-info">i</span>
+      </h2>
+
+      <div class="export-box">
+        <label>De:
+          <input type="date" id="dataInicioExportReport" class="export-input">
+        </label>
+        <label>Para:
+          <input type="date" id="dataFimExportReport" class="export-input">
+        </label>
+        <label>Termos:
+          <select id="qtdTopExport" class="export-select">
+            <option value="10" selected>10</option>
+            <option value="20">20</option>
+            <option value="30">30</option>
+            <option value="40">40</option>
+            <option value="50">50</option>
+          </select>
+        </label>
+        <label>Plataforma:
+          <select id="platformExport" class="export-select">
+            <option value="desktop e mobile" selected>Desktop e Mobile</option>
+            <option value="desktop">Desktop</option>
+            <option value="mobile">Mobile</option>
+          </select>
+        </label>
+        <button id="btnExportReport" class="btn-export-top">Baixar Relatório</button>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="tooltip" id="tooltip"></div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.2.0/crypto-js.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@3.0.0"></script>
+  <script src="https://cdn.sheetjs.com/xlsx-0.20.0/package/dist/xlsx.full.min.js" defer async fetchpriority="low">
+  </script>
+  <script src="env.js"></script>
+  <script src="auth.js"></script>
+  <script src="charts.js"></script>
+  <script src="insights.js"></script>
+  <script src="dashboard.js"></script>
+</body>
+
+</html>
