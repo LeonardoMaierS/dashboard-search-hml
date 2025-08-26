@@ -153,7 +153,11 @@ function initializeMonthSelector(dataMonths, flag) {
       card.addEventListener('click', function () { toggleMonth(monthKey, dataMonths) })
     }
 
-    card.className = `month-card${!isAvailable && !flagHeaderLoader ? ' disabled' : ''}${selectedMonths.includes(monthKey) ? ' selected' : ''}`;
+    console.log(!isAvailable && !flagHeaderLoader)
+    console.log(!flagHeaderLoader)
+    console.log(!isAvailable)
+    
+    card.className = `month-card${(!isAvailable && !flagHeaderLoader) ? ' disabled' : ''}${selectedMonths.includes(monthKey) ? ' selected' : ''}`;
     card.dataset.month = monthKey;
     card.innerHTML = `<div class="month-name">${monthObj.name}</div><div class="month-year">${monthObj.year}</div>`;
 
