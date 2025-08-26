@@ -109,7 +109,7 @@ window.addEventListener('DOMContentLoaded', function () {
   // ===== Carregamento paralelo =====
   async function loadYearAllAtOnce() {
     const months = MONTHS.slice(0, mNow + 1);
-    let contHeaderLoader = months.length
+    contHeaderLoader = months.length
 
     window.definedYear = year;
 
@@ -145,8 +145,7 @@ window.addEventListener('DOMContentLoaded', function () {
     if (!el)
       return;
 
-    flagHeaderLoader = contHeaderLoader === 0
-    if (flagHeaderLoader)
+    if (contHeaderLoader === 0)
       el.style.display = 'none';
   }
 

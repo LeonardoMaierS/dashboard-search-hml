@@ -3,7 +3,7 @@ const MONTHS = ["janeiro", "fevereiro", "março", "abril", "maio", "junho", "jul
 let tableItemLimit = 5;
 let selectedMonths = [];
 let monthsBlocksRendered = [];
-let flagHeaderLoader = true;
+let contHeaderLoader = 0;
 const monthBlocks = new Map();
 
 function getMonthData(platform) {
@@ -153,11 +153,13 @@ function initializeMonthSelector(dataMonths, flag) {
       card.addEventListener('click', function () { toggleMonth(monthKey, dataMonths) })
     }
 
-    console.log(!isAvailable && !flagHeaderLoader)
-    console.log(!flagHeaderLoader)
+    console.log("____________ 1")
+    console.log(!isAvailable && contHeaderLoader !== 0)
+    console.log(contHeaderLoader !== 0)
     console.log(!isAvailable)
-    
-    card.className = `month-card${(!isAvailable && !flagHeaderLoader) ? ' disabled' : ''}${selectedMonths.includes(monthKey) ? ' selected' : ''}`;
+    console.log("____________ 2")
+
+    card.className = `month-card${(!isAvailable && contHeaderLoader !== 0) ? ' disabled' : ''}${selectedMonths.includes(monthKey) ? ' selected' : ''}`;
     card.dataset.month = monthKey;
     card.innerHTML = `<div class="month-name">${monthObj.name}</div><div class="month-year">${monthObj.year}</div>`;
 
