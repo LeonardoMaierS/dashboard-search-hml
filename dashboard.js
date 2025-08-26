@@ -159,7 +159,7 @@ function initializeMonthSelector(dataMonths, flag) {
     console.log(!isAvailable)
     console.log("____________ 2")
 
-    card.className = `month-card${(!isAvailable && contHeaderLoader !== 0) ? ' disabled' : ''}${selectedMonths.includes(monthKey) ? ' selected' : ''}`;
+    card.className = `month-card${(!isAvailable || contHeaderLoader !== 0) ? ' disabled' : ''}${selectedMonths.includes(monthKey) ? ' selected' : ''}`;
     card.dataset.month = monthKey;
     card.innerHTML = `<div class="month-name">${monthObj.name}</div><div class="month-year">${monthObj.year}</div>`;
 
