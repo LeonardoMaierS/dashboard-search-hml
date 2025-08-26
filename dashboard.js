@@ -1,8 +1,9 @@
-const MONTHS = ["janeiro", "fevereiro", "marco", "abril", "maio", "junho", "julho", "agosto", "setembro", "outubro", "novembro", "dezembro"];
+const MONTHS = ["janeiro", "fevereiro", "março", "abril", "maio", "junho", "julho", "agosto", "setembro", "outubro", "novembro", "dezembro"];
 
-let tableItemLimit = 5
-let selectedMonths = []
-let monthsBlocksRendered = []
+let tableItemLimit = 5;
+let selectedMonths = [];
+let monthsBlocksRendered = [];
+let contHeaderLoaderGlobal = 0;
 const monthBlocks = new Map();
 
 function getMonthData(platform) {
@@ -152,14 +153,13 @@ function initializeMonthSelector(dataMonths, flag) {
       card.addEventListener('click', function () { toggleMonth(monthKey, dataMonths) })
     }
 
-    card.className = `month-card${!isAvailable ? ' disabled' : ''}${selectedMonths.includes(monthKey) ? ' selected' : ''}`;
+    card.className = `month-card${!isAvailable && contHeaderLoaderGlobal > 0 ? ' disabled' : ''}${selectedMonths.includes(monthKey) ? ' selected' : ''}`;
     card.dataset.month = monthKey;
     card.innerHTML = `<div class="month-name">${monthObj.name}</div><div class="month-year">${monthObj.year}</div>`;
 
     timeline.appendChild(card);
   });
 }
-
 
 function toggleMonth(monthKey, dataMonths) {
   const idx = selectedMonths.indexOf(monthKey);
@@ -237,7 +237,6 @@ function updateKPIs(dataMonths) {
   const grid = document.getElementById('kpiGrid');
   grid.innerHTML = '';
 
-  // Novo: Utilitário para somar ou tirar média dos KPIs dos dias
   function _aggregateKPI(month) {
     if (!month || !month.historicoDiario) return {
       totalBuscas: 0, buscasComResultado: 0, conversao: 0, ctr: 0, ticketMedio: 0, vendas: 0, pedidos: 0

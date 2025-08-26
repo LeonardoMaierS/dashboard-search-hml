@@ -145,6 +145,7 @@ window.addEventListener('DOMContentLoaded', function () {
     if (!el)
       return;
 
+    contHeaderLoaderGlobal = contHeaderLoader
     if (contHeaderLoader === 0)
       el.style.display = 'none';
   }
