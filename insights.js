@@ -7,13 +7,15 @@ function generateInsights(selectedMonths, dataMonths) {
   const first = dataMonths[selectedMonths[0]];
   const last = dataMonths[selectedMonths[selectedMonths.length - 1]];
   const variacao = ((last.conversao - first.conversao) / first.conversao) * 100;
+  const firstMonthName = first.name === "Marco" ? "Março" : first.name;
+  const lastMonthName = last.name === "Marco" ? "Março" : last.name
 
   if (Math.abs(variacao) > 5) {
     insights.push({
       tipo: variacao > 0 ? 'positive' : 'negative',
       icon: variacao > 0 ? '📈' : '⚠️',
       title: 'Variação de Conversão',
-      description: `Mudança de ${(variacao > 0 ? '+' : '') + variacao.toFixed(1)}% na conversão de ${first.name} para ${last.name}.`
+      description: `Mudança de ${(variacao > 0 ? '+' : '') + variacao.toFixed(1)}% na conversão de ${firstMonthName} para ${lastMonthName}.`
     });
   }
   const variacaoBuscas = ((last.totalBuscas - first.totalBuscas) / first.totalBuscas) * 100;

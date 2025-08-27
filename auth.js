@@ -86,6 +86,13 @@ window.addEventListener('DOMContentLoaded', function () {
 
     const j = await res.json();
 
+    console.log("_________________ 1")
+    console.log(j)
+    console.log("_________________ 2")
+
+    window.ENV.VERSION = "0.0.0"
+    window.ENV.LAST_UPDATE = "01/01/2025"
+
     if (!j.token) throw new Error('AUTH_NO_TOKEN');
 
     BEARER = j.token;
@@ -183,7 +190,7 @@ window.addEventListener('DOMContentLoaded', function () {
             window.monthsData?.[`${month}${year}`]?.mobile?.available) return
 
           const nameMonth = month.charAt(0).toUpperCase() + month.slice(1);
-          const name = nameMonth === "Marco" ? "Março" : nameMonth
+          const name = nameMonth
 
           const emptyMonth = {
             [`${month}${year}`]: {

@@ -88,10 +88,8 @@ function getMonthData(platform) {
 
       const diasCount = dias.length;
 
-      const name = (m.name === "Marco" ? "Março" : m.name) || (d.name === "Marco" ? "Março" : d.name)
-
       data[monthKey] = {
-        name,
+        name: m.name || d.name,
         year: m.year || d.year,
         available: (m.available || d.available) && diasCount > 0,
         historicoDiario,
@@ -128,10 +126,12 @@ function generateTableHTML(headers, rows) {
 
 document.addEventListener('DOMContentLoaded', function () {
   const versaoEl = document.getElementById('versao-dash');
-  if (versaoEl) versaoEl.textContent = `Versão ${window.ENV.VERSION}`;
+  if (versaoEl && window.ENV.VERSION)
+    versaoEl.textContent = `Versão: ${window.ENV.VERSION}`;
 
-  const ultimaAtualizacaoEl = document.getElementById('ultima-atualizacao-valor');
-  if (ultimaAtualizacaoEl) ultimaAtualizacaoEl.textContent = window.ENV.LAST_UPDATE;
+  const ultimaAtualizacaoEl = document.getElementById('ultima-atualizacao');
+  if (ultimaAtualizacaoEl && window.ENV.LAST_UPDATE)
+    ultimaAtualizacaoEl.textContent = `Última atualização: ${window.ENV.LAST_UPDATE}`;
 
   if (!(window.monthsData && typeof window.monthsData === "object")) return;
 
@@ -157,9 +157,11 @@ function initializeMonthSelector(dataMonths, flag) {
       card.addEventListener('click', function () { toggleMonth(monthKey, dataMonths) })
     }
 
+    const monthName = monthObj.name === "Marco" ? "Março" : monthObj.name
+
     card.className = `month-card${(!isAvailable || contHeaderLoader !== 0) ? ' disabled' : ''}${selectedMonths.includes(monthKey) ? ' selected' : ''}`;
     card.dataset.month = monthKey;
-    card.innerHTML = `<div class="month-name">${monthObj.name}</div><div class="month-year">${monthObj.year}</div>`;
+    card.innerHTML = `<div class="month-name">${monthName}</div><div class="month-year">${monthObj.year}</div>`;
 
     timeline.appendChild(card);
   });
@@ -180,7 +182,7 @@ function toggleMonth(monthKey, dataMonths) {
       if (ma.year !== mb.year) return ma.year - mb.year;
 
       const ordemMeses = [
-        "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
+        "Janeiro", "Fevereiro", "Marco", "Abril", "Maio", "Junho",
         "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"
       ];
 
@@ -461,6 +463,8 @@ function updateDetailedTable(dataMonths) {
   const tableHead = document.getElementById('tableHead');
   const tableBody = document.getElementById('tableBody');
 
+  const _monthName = (name) => name === "Marco" ? "Março" : name;
+
   // Monta header dinâmico
   let headerHTML = '<tr><th rowspan="2">Termo de Busca</th>';
   headerHTML += `<th colspan="${selectedMonths.length}">Buscas</th>`;
@@ -468,9 +472,9 @@ function updateDetailedTable(dataMonths) {
   headerHTML += `<th colspan="${selectedMonths.length}">Conversão (%)</th>`;
   headerHTML += '<th rowspan="2">Tendência</th></tr>';
   headerHTML += '<tr>';
-  selectedMonths.forEach(month => headerHTML += `<th>${dataMonths[month].name}</th>`);
-  selectedMonths.forEach(month => headerHTML += `<th>${dataMonths[month].name}</th>`);
-  selectedMonths.forEach(month => headerHTML += `<th>${dataMonths[month].name}</th>`);
+  selectedMonths.forEach(month => headerHTML += `<th>${_monthName(dataMonths[month].name)}</th>`);
+  selectedMonths.forEach(month => headerHTML += `<th>${_monthName(dataMonths[month].name)}</th>`);
+  selectedMonths.forEach(month => headerHTML += `<th>${_monthName(dataMonths[month].name)}</th>`);
   headerHTML += '</tr>';
   tableHead.innerHTML = headerHTML;
 
@@ -1113,7 +1117,9 @@ function addSelectedMonthBlock(monthKey) {
   if (monthsBlocksRendered.includes(monthKey)) {
     block = monthBlocks.get(monthKey);
   } else {
-    block = addSelectedMonth(monthKey, month.name, month.year, uniqueId)
+    const monthName = month.name === "Marco" ? "Março" : month.name
+
+    block = addSelectedMonth(monthKey, monthName, month.year, uniqueId)
 
     firstInclusion = true
     monthsBlocksRendered.push(monthKey);
