@@ -117,7 +117,6 @@ window.addEventListener('DOMContentLoaded', function () {
     return { ok: true, status: 200, data: j };
   }
 
-  // ===== Carregamento paralelo =====
   async function loadYearAllAtOnce() {
     const months = MONTHS.slice(0, mNow + 1);
     contHeaderLoader = months.length
