@@ -1,5 +1,5 @@
 window.addEventListener('DOMContentLoaded', function () {
-  const API_BASE = window.ENV.REMOTE_BASE_URL;
+  const API_BASE = "https://dashboard-backend-800375288267.southamerica-east1.run.app";
   let BEARER = null;
   let VERSION = null;
   let LAST_UPDATE = null;
@@ -12,6 +12,7 @@ window.addEventListener('DOMContentLoaded', function () {
 
   function ensurePasswordModal() {
     if (document.getElementById('password-modal')) return;
+
     document.body.insertAdjacentHTML('beforeend', `
       <div id="password-modal" role="dialog" aria-modal="true">
         <div class="auth-card">
@@ -43,12 +44,16 @@ window.addEventListener('DOMContentLoaded', function () {
       </div>
 
       <div id="global-loader" aria-live="polite" aria-busy="true">
-        <div class="gcard"><span class="gspin" aria-hidden="true"></span> <span>Carregando dados…</span></div>
+        <div class="gcard">
+          <span class="gspin" aria-hidden="true"></span>
+          <span>Carregando dados…</span>
+        </div>
       </div>
     `);
 
     const eye = document.getElementById('toggle-eye');
     const input = document.getElementById('site-password');
+
     eye.addEventListener('click', () => {
       const t = input.getAttribute('type') === 'password' ? 'text' : 'password';
       input.setAttribute('type', t);

@@ -1145,8 +1145,6 @@ function renderDailyCharts(series) {
       tension: .35, pointRadius: 2, yAxisID: 'y3'
     }
   ];
-
-  updateOrCreateDailyChart(labels, datasets); // use sua função existente de criação/atualização
 }
 
 window.renderDailyCharts = renderDailyCharts;

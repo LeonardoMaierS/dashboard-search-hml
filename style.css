@@ -1677,6 +1677,7 @@ canvas {
 }
 
 .brand i {
+  padding-bottom: 15px;
   width: 32px;
   height: 32px;
   display: inline-flex;
@@ -1685,13 +1686,13 @@ canvas {
 }
 
 .brand svg {
-  width: 25px;
-  height: 25px;
+  width: 35px;
+  height: 35px;
   opacity: .9
 }
 
 .spin {
-  animation: spin 1s linear infinite;
+  animation: spin 5s linear infinite;
 }
 
 @keyframes spin {
