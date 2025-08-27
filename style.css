@@ -1596,9 +1596,6 @@ canvas {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(0, 0, 0, .6);
-  z-index: 9999;
-  padding: 24px
 }
 
 .auth-card {
@@ -1682,17 +1679,29 @@ canvas {
 .brand i {
   width: 32px;
   height: 32px;
-  border-radius: 8px;
-  background: #19414a;
   display: inline-flex;
   align-items: center;
   justify-content: center
 }
 
 .brand svg {
-  width: 18px;
-  height: 18px;
+  width: 25px;
+  height: 25px;
   opacity: .9
+}
+
+.spin {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .loading .btn-label {

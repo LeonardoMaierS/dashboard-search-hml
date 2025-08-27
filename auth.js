@@ -17,7 +17,9 @@ window.addEventListener('DOMContentLoaded', function () {
         <div class="auth-card">
           <div class="brand">
             <i aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none"><path d="M12 3l8 4.5v9L12 21 4 16.5v-9L12 3Z" stroke="#8fd6e5" stroke-width="1.4"/></svg>
+              <svg viewBox="0 0 24 24" fill="none" class="spin">
+                <path d="M12 3l8 4.5v9L12 21 4 16.5v-9L12 3Z" stroke="#8fd6e5" stroke-width="1.4"/>
+              </svg>
             </i>
             <div style="display:flex;flex-direction:column">
               <span class="auth-title">Acesso ao Dashboard</span>
