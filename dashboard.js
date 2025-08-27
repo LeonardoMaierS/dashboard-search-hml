@@ -692,6 +692,7 @@ function initializeModals() {
 
 function addSelectedMonth(monthKey, monthName, monthYear, uniqueId) {
   const block = document.createElement('div');
+  const rangeMonthName = monthName === "Março" ? "Marco" : monthName
 
   block.className = 'selected-month-block';
   block.dataset.monthKey = monthKey;
@@ -705,10 +706,10 @@ function addSelectedMonth(monthKey, monthName, monthYear, uniqueId) {
       </button>
     </div>
     <div class="month-range" id="monthRange">
-      <label for="rangeStart-${monthName}">De</label>
-      <input type="date" id="rangeStart-${monthName}" name="rangeStart-${monthName}" />
-      <label for="rangeEnd-${monthName}">Até</label>
-      <input type="date" id="rangeEnd-${monthName}" name="rangeEnd-${monthName}" />
+      <label for="rangeStart-${rangeMonthName}">De</label>
+      <input type="date" id="rangeStart-${rangeMonthName}" name="rangeStart-${rangeMonthName}" />
+      <label for="rangeEnd-${rangeMonthName}">Até</label>
+      <input type="date" id="rangeEnd-${rangeMonthName}" name="rangeEnd-${rangeMonthName}" />
     </div>
   </div>
 
