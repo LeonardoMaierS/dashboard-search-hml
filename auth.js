@@ -86,12 +86,20 @@ window.addEventListener('DOMContentLoaded', function () {
 
     const j = await res.json();
 
+
+
+    window.ENV.VERSION = j.version
+    window.ENV.LAST_UPDATE = j.lastUpdate
+
     console.log("_________________ 1")
     console.log(j)
     console.log("_________________ 2")
-
-    window.ENV.VERSION = "0.0.0"
-    window.ENV.LAST_UPDATE = "01/01/2025"
+    console.log(j.version)
+    console.log("_________________ 3")
+    console.log(j.lastUpdate)
+    console.log("_________________ 4")
+    console.log(window.ENV)
+    console.log("_________________ 5")
 
     if (!j.token) throw new Error('AUTH_NO_TOKEN');
 
