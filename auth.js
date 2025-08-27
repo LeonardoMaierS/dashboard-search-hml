@@ -1,6 +1,8 @@
 window.addEventListener('DOMContentLoaded', function () {
   const API_BASE = window.ENV.REMOTE_BASE_URL;
   let BEARER = null;
+  let VERSION = null;
+  let LAST_UPDATE = null;
 
   const now = new Date();
   const year = now.getFullYear();
@@ -86,24 +88,11 @@ window.addEventListener('DOMContentLoaded', function () {
 
     const j = await res.json();
 
-
-
-    window.ENV.VERSION = j.version
-    window.ENV.LAST_UPDATE = j.lastUpdate
-
-    console.log("_________________ 1")
-    console.log(j)
-    console.log("_________________ 2")
-    console.log(j.version)
-    console.log("_________________ 3")
-    console.log(j.lastUpdate)
-    console.log("_________________ 4")
-    console.log(window.ENV)
-    console.log("_________________ 5")
-
     if (!j.token) throw new Error('AUTH_NO_TOKEN');
 
     BEARER = j.token;
+    VERSION = j.version
+    LAST_UPDATE = j.lastUpdate
   }
 
   async function fetchMonth(year, month) {
@@ -193,6 +182,14 @@ window.addEventListener('DOMContentLoaded', function () {
       await auth(pwd);
 
       if (BEARER) {
+        const versaoEl = document.getElementById('versao-dash');
+        if (versaoEl && VERSION)
+          versaoEl.textContent = `Versão: ${VERSION}`;
+
+        const ultimaAtualizacaoEl = document.getElementById('ultima-atualizacao');
+        if (ultimaAtualizacaoEl && LAST_UPDATE)
+          ultimaAtualizacaoEl.textContent = `Última atualização: ${LAST_UPDATE}`;
+
         MONTHS.forEach(month => {
           if (window.monthsData?.[`${month}${year}`]?.mobile?.available ||
             window.monthsData?.[`${month}${year}`]?.mobile?.available) return

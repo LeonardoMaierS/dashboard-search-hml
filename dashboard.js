@@ -125,14 +125,6 @@ function generateTableHTML(headers, rows) {
 }
 
 document.addEventListener('DOMContentLoaded', function () {
-  const versaoEl = document.getElementById('versao-dash');
-  if (versaoEl && window.ENV.VERSION)
-    versaoEl.textContent = `Versão: ${window.ENV.VERSION}`;
-
-  const ultimaAtualizacaoEl = document.getElementById('ultima-atualizacao');
-  if (ultimaAtualizacaoEl && window.ENV.LAST_UPDATE)
-    ultimaAtualizacaoEl.textContent = `Última atualização: ${window.ENV.LAST_UPDATE}`;
-
   if (!(window.monthsData && typeof window.monthsData === "object")) return;
 
   const dataMonths = getMonthData();
