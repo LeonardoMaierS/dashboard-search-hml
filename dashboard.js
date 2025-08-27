@@ -180,7 +180,7 @@ function toggleMonth(monthKey, dataMonths) {
       if (ma.year !== mb.year) return ma.year - mb.year;
 
       const ordemMeses = [
-        "Janeiro", "Fevereiro", "Marco", "Abril", "Maio", "Junho",
+        "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
         "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"
       ];
 
