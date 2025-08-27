@@ -1,4 +1,4 @@
-const MONTHS = ["janeiro", "fevereiro", "março", "abril", "maio", "junho", "julho", "agosto", "setembro", "outubro", "novembro", "dezembro"];
+const MONTHS = ["janeiro", "fevereiro", "marco", "abril", "maio", "junho", "julho", "agosto", "setembro", "outubro", "novembro", "dezembro"];
 
 let tableItemLimit = 5;
 let selectedMonths = [];
@@ -87,8 +87,11 @@ function getMonthData(platform) {
       });
 
       const diasCount = dias.length;
+
+      const name = (m.name === "Marco" ? "Março" : m.name) || (d.name === "Marco" ? "Março" : d.name)
+
       data[monthKey] = {
-        name: m.name || d.name,
+        name,
         year: m.year || d.year,
         available: (m.available || d.available) && diasCount > 0,
         historicoDiario,
@@ -102,6 +105,7 @@ function getMonthData(platform) {
         pedidos
       };
     } else {
+
       data[monthKey] = monthObj[monthKey][device];
     }
   });
@@ -153,12 +157,6 @@ function initializeMonthSelector(dataMonths, flag) {
       card.addEventListener('click', function () { toggleMonth(monthKey, dataMonths) })
     }
 
-    console.log("____________ 1")
-    console.log(!isAvailable && contHeaderLoader !== 0)
-    console.log(contHeaderLoader !== 0)
-    console.log(!isAvailable)
-    console.log("____________ 2")
-
     card.className = `month-card${(!isAvailable || contHeaderLoader !== 0) ? ' disabled' : ''}${selectedMonths.includes(monthKey) ? ' selected' : ''}`;
     card.dataset.month = monthKey;
     card.innerHTML = `<div class="month-name">${monthObj.name}</div><div class="month-year">${monthObj.year}</div>`;
@@ -182,7 +180,7 @@ function toggleMonth(monthKey, dataMonths) {
       if (ma.year !== mb.year) return ma.year - mb.year;
 
       const ordemMeses = [
-        "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
+        "Janeiro", "Fevereiro", "Marco", "Abril", "Maio", "Junho",
         "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"
       ];
 

@@ -183,11 +183,12 @@ window.addEventListener('DOMContentLoaded', function () {
             window.monthsData?.[`${month}${year}`]?.mobile?.available) return
 
           const nameMonth = month.charAt(0).toUpperCase() + month.slice(1);
+          const name = nameMonth === "Marco" ? "Março" : nameMonth
 
           const emptyMonth = {
             [`${month}${year}`]: {
-              mobile: { name: nameMonth, year: year, available: false, historicoDiario: {} },
-              desktop: { name: nameMonth, year: year, available: false, historicoDiario: {} }
+              mobile: { name, year, available: false, historicoDiario: {} },
+              desktop: { name, year, available: false, historicoDiario: {} }
             }
           }
 
