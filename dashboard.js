@@ -1152,7 +1152,6 @@ function addSelectedMonthBlock(monthKey) {
     }
   });
 
-  // Também permite expandir/recolher clicando na header do bloco (exceto botão)
   block.querySelector('.selected-month-block-header').addEventListener('click', (e) => {
     if (e.target !== toggleBtn) {
       const expanded = block.classList.toggle('expanded');
@@ -1308,6 +1307,7 @@ function addSelectedMonthBlock(monthKey) {
   });
 }
 
+/*
 function renderMonthBlockCharts(monthKey, uniqueId) {
   const dataMonths = getMonthData()
 
@@ -1503,6 +1503,7 @@ function renderMonthBlockCharts(monthKey, uniqueId) {
   </table>
   `;
 }
+*/
 
 document.querySelectorAll('.custom-select').forEach((select) => {
   const valueSpan = select.querySelector('.custom-select-value')

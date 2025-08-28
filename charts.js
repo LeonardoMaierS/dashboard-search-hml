@@ -585,6 +585,11 @@ function renderBarTop10BuscasComResultado(monthId, month) {
 
   const termos = [];
 
+  console.log("_____________________ 1")
+  for (let chave in objetos)
+    console.log("Nome:", chave)
+  console.log("_____________________ 2")
+
   for (const dia in month.historicoDiario) {
     const termosDia = month.historicoDiario[dia].termosComResultado || [];
     termos.push(...termosDia);
@@ -1160,6 +1165,6 @@ window.renderLineEvolucaoCTR = renderLineEvolucaoCTR;
 window.renderBarTop10BuscasComResultado = renderBarTop10BuscasComResultado;
 window.renderBarTop10BuscasSemResultado = renderBarTop10BuscasSemResultado;
 window.renderBarBuscasComResultadoSemVendas = renderBarBuscasComResultadoSemVendas;
-window.renderPieDistribuicaoTop10BuscasComResultado = renderPieDistribuicaoTop10BuscasComResultado;
 window.renderPieDistribuicaoTop10BuscasSemVendas = renderPieDistribuicaoTop10BuscasSemVendas;
+window.renderPieDistribuicaoTop10BuscasComResultado = renderPieDistribuicaoTop10BuscasComResultado;
 window.renderPieDistribuicaoTop10BuscasSemResultado = renderPieDistribuicaoTop10BuscasSemResultado;

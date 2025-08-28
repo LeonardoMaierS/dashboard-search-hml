@@ -1,3 +1,4 @@
+/*
 function generateInsights(selectedMonths, dataMonths) {
   let insights = [];
   if (selectedMonths.length < 2) {
@@ -51,3 +52,4 @@ function generateInsights(selectedMonths, dataMonths) {
   });
   return insights;
 }
+*/
