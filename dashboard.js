@@ -1681,16 +1681,22 @@ function listenMonthRange(month, monthKey) {
     const endDate = end.value;
 
     if (startDate && endDate && startDate <= endDate) {
-      addSelectedMonthBlock(monthKey)
-
       const block = monthBlocks.get(monthKey);
 
-      if (!block) return;
+      if (block) {
+        const btn = block.querySelector('.advanced-toggle');
+        const content = block.querySelector('.advanced-charts-content');
 
-      const advancedToggleBtn = block.querySelector('.advanced-toggle');
-      advancedToggleBtn.classList.remove('expanded');
+        if (btn)
+          btn.classList.remove('expanded');
 
-      block.classList.remove('expanded');
+        if (content)
+          content.style.display = 'none';
+
+        block.classList.remove('expanded');
+      }
+
+      addSelectedMonthBlock(monthKey)
     }
   }
 
