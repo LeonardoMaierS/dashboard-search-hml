@@ -585,11 +585,6 @@ function renderBarTop10BuscasComResultado(monthId, month) {
 
   const termos = [];
 
-  console.log("_____________________ 1")
-  for (let chave in month.historicoDiario)
-    console.log("Nome:", chave)
-  console.log("_____________________ 2")
-
   for (const dia in month.historicoDiario) {
     const termosDia = month.historicoDiario[dia].termosComResultado || [];
     termos.push(...termosDia);
