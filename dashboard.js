@@ -1109,6 +1109,12 @@ function addSelectedMonthBlock(monthKey) {
   // Caso ja renderizado deve alterar somente os valores
   if (monthsBlocksRendered.includes(monthKey)) {
     block = monthBlocks.get(monthKey);
+
+    const advToggleBtn = block.querySelector('.advanced-toggle');
+    const advChartsContent = block.querySelector('.advanced-charts-content');
+
+    advToggleBtn.style.display = 'none';
+    advChartsContent.classList.remove('expanded');
   } else {
     const monthName = month.name === "Marco" ? "Março" : month.name
 
