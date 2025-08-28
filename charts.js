@@ -586,7 +586,7 @@ function renderBarTop10BuscasComResultado(monthId, month) {
   const termos = [];
 
   console.log("_____________________ 1")
-  for (let chave in objetos)
+  for (let chave in month.historicoDiario)
     console.log("Nome:", chave)
   console.log("_____________________ 2")
 
