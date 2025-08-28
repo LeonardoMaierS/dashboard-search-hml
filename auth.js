@@ -1,5 +1,5 @@
 window.addEventListener('DOMContentLoaded', function () {
-  const API_BASE = "https://dashboard-backend-800375288267.southamerica-east1.run.app";
+  const API_BASE = "https://dashboard-backend-node-1036625242346.southamerica-east1.run.app";
   let BEARER = null;
   let VERSION = null;
   let LAST_UPDATE = null;
