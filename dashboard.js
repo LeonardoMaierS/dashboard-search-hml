@@ -1110,11 +1110,6 @@ function addSelectedMonthBlock(monthKey) {
   if (monthsBlocksRendered.includes(monthKey)) {
     block = monthBlocks.get(monthKey);
 
-    const advToggleBtn = block.querySelector('.advanced-toggle');
-    const advChartsContent = block.querySelector('.advanced-charts-content');
-
-    advToggleBtn.style.display = 'none';
-    advChartsContent.classList.remove('expanded');
   } else {
     const monthName = month.name === "Marco" ? "Março" : month.name
 
@@ -1691,6 +1686,9 @@ function listenMonthRange(month, monthKey) {
       const block = monthBlocks.get(monthKey);
 
       if (!block) return;
+
+      const advancedToggleBtn = block.querySelector('.advanced-toggle');
+      advancedToggleBtn.classList.remove('expanded');
 
       block.classList.remove('expanded');
     }
